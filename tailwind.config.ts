@@ -1,8 +1,10 @@
-const {nextui} = require("@nextui-org/react");
+const { nextui } = require("@nextui-org/react");
 
 module.exports = {
   content: [
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+    './app/**/*.{html,js,tsx}',
+    './components/**/*.{html,js,tsx}',
   ],
   plugins: [
     nextui({
@@ -15,22 +17,24 @@ module.exports = {
         light: {
           layout: {}, // light theme layout tokens
           colors: {
-            surface:"#010B14",
-            primary:"#FF4800",
-            secondary:"#FFF0EB",
-            white:"#FFFFFF",
-            primaryContainer:"#521400",
+            surface: "#010B14",
+            primary: "#FF4800",
+            secondary: "#FFF0EB",
+            white: "#FFFFFF",
+            primaryContainer: "#521400",
+            primaryText: "#140500",
           }, // light theme colors
         },
         dark: {
           layout: {}, // dark theme layout tokens
           colors: {
-            surface:"#010B14",
-            primary:"#FF4800",
-            secondary:"#FFF0EB",
-            white:"#FFFFFF",
-            primaryContainer:"#521400",
-          }, 
+            surface: "#010B14",
+            primary: "#FF4800",
+            secondary: "#FFF0EB",
+            white: "#FFFFFF",
+            primaryContainer: "#521400",
+            primaryText: "#140500",
+          },
         },
       },
     }),

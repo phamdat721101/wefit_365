@@ -8,12 +8,29 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
+  },
   "dependencies": {
     "@nextui-org/react": "^2.4.6",
+    "@types/react-gauge-chart": "^0.4.3",
+    "chart.js": "^4.4.3",
+    "chartjs-gauge": "^0.3.0",
+    "classnames": "^2.5.1",
     "framer-motion": "^11.3.21",
+    "google-auth-library": "^9.13.0",
+    "googleapis": "^30.0.0",
+    "http2": "^3.3.7",
     "next": "14.2.5",
+    "next-auth": "^4.24.7",
     "react": "^18",
-    "react-dom": "^18"
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18",
+    "recharts": "^2.12.7",
+    "sass": "^1.77.8",
+    "swiper": "^11.1.9"
   },
   "devDependencies": {
     "@types/node": "^20",
