@@ -4,6 +4,9 @@ const nextConfig = {
         config.resolve.fallback = {'net':false,'tls':false, 'child_process': false };
         return config;
       },
+    images: {
+        domains: ['images.unsplash.com'],
+    },
 };
 
 export default nextConfig;

@@ -5,8 +5,8 @@ import Footer from '@/components/Footer';
 
 
 const Home: React.FC = () => {
-  const { data: session } = useSession();
-
+  const { data: session } = useSession() || {};
+  console.log(session);
   if (session) {
     return (
         <div className="flex flex-col min-h-screen bg-white text-black p-4">

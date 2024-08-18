@@ -47,7 +47,7 @@ const Login = () => {
       </div>
 
       <p className="text-gray-500 text-center text-small">
-        By clicking Log in, you agree to our <a href="#" className="text-primary">Terms of use</a> and <a href="#" className="text-primary">Privacy policy</a>.
+        By clicking Log in, you agree to our <a href="#" className="text-primary">Terms of use</a> and <a href="/policy" className="text-primary">Privacy policy</a>.
       </p>
     </div>
   );

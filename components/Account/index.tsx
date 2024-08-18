@@ -1,6 +1,6 @@
 "use client";
-import Image from "next/image";
-import avatar from "@/asset/avatar.jpg"
+// import Image from "next/image";
+// import avatar from "@/asset/avatar.jpg"
 import NotiIcon from "@/asset/icon/NotiIcon";
 import LogoIconSmall from "@/asset/icon/LogoSmall";
 import useTab from "@/components/Tabbar/useTab";
@@ -28,6 +28,8 @@ import { useEffect, useState } from 'react';
 import StepChart from '@/components/StepChart';
 import Step7dayChart from "../SevenDayStep";
 import GaugeChart from "../GaugeChart/GaugeChart";
+import {Image} from "@nextui-org/image";
+import LogoutIcon from "@/asset/icon/LogoutIcon";
 
 interface FitnessData {
     steps: number,
@@ -47,7 +49,7 @@ const Account = () => {
     }
     const [stepData, setStepData] = useState<StepData[]>([]);
     const [fitData, setFitData] = useState<FitnessData>({steps:0,distance:0});
-
+    const { data: session } = useSession() || {};
     useEffect(() => {
         async function fetchStepData() {
           const response = await fetch('/api/getDailyStep');
@@ -70,11 +72,18 @@ const Account = () => {
         <>
             <div className="w-full flex justify-between items-center">
                 <div className="flex items-center gap-3">
-                    <Image src={avatar} alt='avatar' className="w-10 h-10 rounded-full border-2 border-stone-900 object-cover" />
-                    <span className="font-bold">Jane Cooper</span>
+                    {/* <Image src={avatar} alt='avatar' className="w-10 h-10 rounded-full border-2 border-stone-900 object-cover" /> */}
+                    <Image
+                        isZoomed
+                        width={45}
+                        radius="full"
+                        alt="NextUI Fruit Image with Zoom"
+                        src={session?.user?.image ?? "/path/to/default/image.jpg"}
+                    />
+                    <span className="font-bold">{session?.user?.name}</span>
                 </div>
                 <button onClick={() => signOut()}>
-                    <NotiIcon />
+                    <LogoutIcon />
                 </button>
             </div>
 
