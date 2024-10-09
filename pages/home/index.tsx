@@ -3,7 +3,6 @@ import Login from '@/components/Login';
 import Account from '@/components/Account';
 import Footer from '@/components/Footer';
 
-
 const Home: React.FC = () => {
   const { data: session } = useSession() || {};
   console.log(session);

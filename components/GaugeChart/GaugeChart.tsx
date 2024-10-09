@@ -1,25 +1,84 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import toast, { Toaster } from 'react-hot-toast';
+import moment from 'moment';
 
 interface GaugeChartProps {
   value: number;
   maxValue: number;
+  onClaimSuccess: (total: Total) => void;
 }
 
-const GaugeChart: React.FC<GaugeChartProps> = ({ value, maxValue }) => {
+interface Total {
+  distance: number;
+  hour: number;
+  minute: number;
+  coin: number;
+}
+
+const GaugeChart: React.FC<GaugeChartProps> = ({ value, maxValue, onClaimSuccess }) => {
   const data = [
     { name: 'Completed', value: value },
     { name: 'Remaining', value: maxValue - value },
   ];
 
+  const [chartData,setChartData] = useState(data);
+
+
+
+  const [status,setStatus] = useState(1);
+
   const COLORS = ['#FFA500', '#FFC0CB'];
+
+
+  const start = () =>{
+    if(status == 1)
+    {
+      const now = moment();
+      toast.success(`Checkin successful at ${now.format('YYYY-MM-DD HH:mm:ss')}.`)
+      setStatus(2);
+    }
+    if(status == 2){
+      const now = moment();
+      toast.success(`Claim successful at ${now.format('YYYY-MM-DD HH:mm:ss')}.`)
+      setStatus(3);
+      onClaimSuccess({
+        distance: 15,
+        hour: 1,
+        minute: 20,
+        coin:5,
+      });
+
+      
+      
+    }
+  }
+
+  const [seconds, setSeconds] = useState(value);
+
+  useEffect(() => {
+    let interval:any;
+    if (status === 2) {
+      interval = setInterval(() => {
+        setSeconds((prevSeconds) => Math.min(prevSeconds + 45, maxValue));
+      }, 100);
+    }
+    return () => clearInterval(interval);
+  }, [status, maxValue]);
+
+  useEffect(() => {
+    setChartData([
+      { name: 'Completed', value: seconds },
+      { name: 'Remaining', value: maxValue - seconds },
+    ]);
+  }, [seconds, maxValue]);
 
   return (
     <div style={{ width: '400px', height: '200px', position: 'relative' }}>
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
-            data={data}
+            data={chartData}
             cx="50%"
             cy="100%"
             startAngle={180}
@@ -29,7 +88,7 @@ const GaugeChart: React.FC<GaugeChartProps> = ({ value, maxValue }) => {
             paddingAngle={0}
             dataKey="value"
           >
-            {data.map((entry, index) => (
+            {chartData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
@@ -43,10 +102,10 @@ const GaugeChart: React.FC<GaugeChartProps> = ({ value, maxValue }) => {
         textAlign: 'center',
       }}>
         <div style={{ fontSize: '16px' }}>
-          <span style={{fontWeight: 'bold', fontSize: '24px'}}>{value}</span>/{maxValue} steps
+          <span style={{fontWeight: 'bold', fontSize: '24px'}}>{seconds}</span>/{maxValue} steps
         </div>
-        <button style={{
-          backgroundColor: '#FF0000',
+        <button onClick={() => start()} style={{
+          backgroundColor: status == 3?'#808080':'#FF0000',
           borderRadius: '50%',
           width: '60px',
           height: '60px',
@@ -56,17 +115,20 @@ const GaugeChart: React.FC<GaugeChartProps> = ({ value, maxValue }) => {
           justifyContent: 'center',
           alignItems: 'center',
           marginTop: '20px'
-        }}>
+        }}
+          
+          disabled={status==3}
+        >
           <div style={{
-            width: 0,
-            height: 0,
-            borderTop: '12px solid transparent',
-            borderBottom: '12px solid transparent',
-            borderLeft: '18px solid white',
-            marginLeft: '5px'
-          }}></div>
+            color: 'white',
+            fontWeight: 'bold',
+            fontSize: '14px'
+          }}>
+            {status === 1 ? 'Check-in' : 'Claim'}
+          </div>
         </button>
       </div>
+      <Toaster />
     </div>
   );
 };

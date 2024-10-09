@@ -18,7 +18,7 @@ const Login = () => {
         <Logo />
       </div>
 
-      <div className="w-full flex flex-col gap-4 mb-2">
+      {/* <div className="w-full flex flex-col gap-4 mb-2">
         <div key="lg" className="flex w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
           <Input size="lg" type="email" label="Email" />
         </div>
@@ -33,17 +33,17 @@ const Login = () => {
 
       <div className="mt-5 mb-5">
         <Button isDisabled className="w-full bg-primary text-white" >Log in</Button>
-      </div>
+      </div> */}
 
       <div className="flex items-center justify-center my-4 mt-4 mb-5">
         <hr className="flex-grow border-gray-700" />
-        <span className="px-3 text-sm">Or continue with</span>
+        <span className="px-3 text-sm">Login with google</span>
         <hr className="flex-grow border-gray-700" />
       </div>
 
       <div className="flex flex-row mb-5">
         <Button startContent={<GoogleIcon />} size="md" className="button flex-1 mx-1" onPress={() => signIn()}>Google</Button>
-        <Button isDisabled startContent={<FacebookIcon />} size="md" className="button flex-1 mx-1">Facebook</Button>
+        {/* <Button isDisabled startContent={<FacebookIcon />} size="md" className="button flex-1 mx-1">Facebook</Button> */}
       </div>
 
       <p className="text-gray-500 text-center text-small">

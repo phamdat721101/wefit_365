@@ -38,6 +38,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           {
             dataTypeName: 'com.google.distance.delta',
             dataSourceId: 'derived:com.google.distance.delta:com.google.android.gms:merge_distance_delta'
+          },
+          {
+            dataTypeName: 'com.google.calories.expended',
+            dataSourceId: 'derived:com.google.calories.expended:com.google.android.gms:merge_calories_expended'
+          },
+          {
+            dataTypeName: 'com.google.active_minutes',
+            dataSourceId: 'derived:com.google.active_minutes:com.google.android.gms:merge_active_minutes'
           }
         ],
         bucketByTime: { durationMillis: 86400000 }, // 1 day in milliseconds
@@ -48,10 +56,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const stepData = response.data.bucket[0].dataset[0].point[0]?.value[0]?.intVal || 0;
     const distanceData = response.data.bucket[0].dataset[1].point[0]?.value[0]?.fpVal || 0;
-
+    const caloriesData = response.data.bucket[0].dataset[2].point[0]?.value[0]?.fpVal || 0;
+    const durationData = response.data.bucket[0].dataset[3].point[0]?.value[0]?.intVal || 0;
+    
     res.status(200).json({
       steps: stepData,
-      distance: distanceData // This will be in meters
+      distance: distanceData, // This will be in meters
+      calories: caloriesData,
+      activeDuration: durationData // This will be in minutes
     });
   } catch (error: any) {
     console.error('Error in getFitnessData:', error)
